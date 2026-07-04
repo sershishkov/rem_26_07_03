@@ -1,4 +1,13 @@
 import type { Metadata } from 'next';
+import AuthProvider from '@/components/AuthProvider/AuthProvider';
+import ToastProvider from '@/components/ToastProvider/toast.provider';
+import { ThemeProvider } from '@mui/material/styles';
+
+import theme_dark from '../mui_theme/theme_dark';
+import 'react-toastify/dist/ReactToastify.css';
+
+import Navbar from '@/components/navbar/Navbar';
+import Footer from '@/components/footer/Footer';
 
 import './globals.css';
 import styles from './page.module.css';
@@ -14,12 +23,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' suppressHydrationWarning>
-      <body suppressHydrationWarning>
-        <main id='main' className={styles.main}>
-          {children}
-        </main>
-      </body>
-    </html>
+    <AuthProvider>
+      <ThemeProvider theme={theme_dark}>
+        <html lang='en' suppressHydrationWarning>
+          <body suppressHydrationWarning>
+            <ToastProvider>
+              <Navbar />
+              <main id='main' className={styles.main}>
+                {children}
+              </main>
+              <Footer />
+            </ToastProvider>
+          </body>
+        </html>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
